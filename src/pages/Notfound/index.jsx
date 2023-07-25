@@ -1,7 +1,8 @@
 import './NotFound.css';
+import Layout from '../../components/Layout'
 
 function NotFound() {
-	return <p className="bg-red-700">NotFound</p>;
+	return <Layout>NotFound</Layout>;
 }
 
 export default NotFound;

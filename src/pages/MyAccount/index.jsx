@@ -1,7 +1,8 @@
 import './MyAccount.css';
+import Layout from '../../components/Layout'
 
 function MyAccount() {
-	return <p className="bg-red-700">MyAccount</p>;
+	return <Layout>MyAccount</Layout>;
 }
 
 export default MyAccount;

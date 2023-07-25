@@ -1,7 +1,8 @@
 import './SignIn.css';
+import Layout from '../../components/Layout'
 
 function SignIn() {
-	return <p className="bg-red-700">SignIn</p>;
+	return <Layout>SignIn</Layout>;
 }
 
 export default SignIn;

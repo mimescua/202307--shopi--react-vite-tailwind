@@ -1,7 +1,8 @@
 import './Home.css';
+import Layout from '../../components/Layout'
 
 function Home() {
-	return <p className="bg-red-700">Home</p>;
+	return <Layout>Home</Layout>;
 }
 
 export default Home;
