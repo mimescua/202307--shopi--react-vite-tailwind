@@ -1,4 +1,3 @@
-import './SignIn.css';
 import Layout from '../../components/Layout'
 
 function SignIn() {

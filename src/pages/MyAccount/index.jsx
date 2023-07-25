@@ -1,4 +1,3 @@
-import './MyAccount.css';
 import Layout from '../../components/Layout'
 
 function MyAccount() {

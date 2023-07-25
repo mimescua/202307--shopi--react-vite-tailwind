@@ -1,4 +1,3 @@
-import './MyOrder.css';
 import Layout from '../../components/Layout'
 
 function MyOrder() {

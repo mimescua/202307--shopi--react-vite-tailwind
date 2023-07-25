@@ -1,4 +1,3 @@
-import './NotFound.css';
 import Layout from '../../components/Layout'
 
 function NotFound() {

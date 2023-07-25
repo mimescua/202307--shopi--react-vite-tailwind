@@ -1,4 +1,3 @@
-import './Home.css';
 import Layout from '../../components/Layout'
 
 function Home() {
