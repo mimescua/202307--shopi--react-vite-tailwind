@@ -17,6 +17,11 @@ const ShoppingCartProvider = ({ children }) => {
 	// Shoping Cart - Add products to car
 	const [cartProducts, setCartProducts] = React.useState([]);
 
+	// Checkout side menu - Open/Close
+	const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = React.useState(false);
+	const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
+	const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
+
 	return (
 		<ShoppingCartContext.Provider
 			value={{
@@ -29,6 +34,9 @@ const ShoppingCartProvider = ({ children }) => {
 				setProductToShow,
 				cartProducts,
 				setCartProducts,
+				isCheckoutSideMenuOpen,
+				openCheckoutSideMenu,
+				closeCheckoutSideMenu,
 			}}
 		>
 			{children}

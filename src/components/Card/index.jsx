@@ -7,19 +7,26 @@ function Card({ price, title, image, category, description }) {
 		count,
 		setCount,
 		openProductDetail,
+		closeProductDetail,
 		setProductToShow,
 		cartProducts,
-		setCartProducts
+		setCartProducts,
+		openCheckoutSideMenu,
+		closeCheckoutSideMenu,
 	} = React.useContext(ShoppingCartContext);
 
 	const showProduct = () => {
-		openProductDetail();
+		closeCheckoutSideMenu()
 		setProductToShow({ price, title, image, category, description });
+		openProductDetail();
 	};
 
-	const addProductToCArt = () => {
+	const addProductsToCArt = (event) => {
+		event.stopPropagation()
+		closeProductDetail()
 		setCount(count + 1)
 		setCartProducts([...cartProducts, { price, title, image, category, description }])
+		openCheckoutSideMenu()
 	};
 
 	return (
@@ -38,7 +45,7 @@ function Card({ price, title, image, category, description }) {
 				/>
 				<div
 					className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-					onClick={addProductToCArt} 
+					onClick={(event) => addProductsToCArt(event)} 
 				>
 					<PlusSmallIcon className="h-6 w-6 text-black" />
 				</div>
