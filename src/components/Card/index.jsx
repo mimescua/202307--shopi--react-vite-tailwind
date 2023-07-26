@@ -1,8 +1,8 @@
 import React from 'react';
 import { ShoppingCartContext } from '../../context';
-import { PlusSmallIcon } from '@heroicons/react/24/outline';
+import { PlusSmallIcon, CheckIcon } from '@heroicons/react/24/outline';
 
-function Card({ price, title, image, category, description }) {
+function Card({ id, price, title, image, category, description }) {
 	const { 
 		count,
 		setCount,
@@ -12,11 +12,9 @@ function Card({ price, title, image, category, description }) {
 		cartProducts,
 		setCartProducts,
 		openCheckoutSideMenu,
-		closeCheckoutSideMenu,
 	} = React.useContext(ShoppingCartContext);
 
 	const showProduct = () => {
-		closeCheckoutSideMenu()
 		setProductToShow({ price, title, image, category, description });
 		openProductDetail();
 	};
@@ -25,8 +23,31 @@ function Card({ price, title, image, category, description }) {
 		event.stopPropagation()
 		closeProductDetail()
 		setCount(count + 1)
-		setCartProducts([...cartProducts, { price, title, image, category, description }])
+		setCartProducts([...cartProducts, { id, price, title, image, category, description }])
 		openCheckoutSideMenu()
+	};
+	
+	const renderIcon = (id) => {
+		const isInCart =
+			cartProducts.filter((product) => product.id === id).length > 0;
+		if (isInCart) {
+			return (
+				<div
+					className="absolute top-0 right-0 flex justify-center items-center bg-green-800 w-6 h-6 rounded-full m-2 p-1"
+				>
+					<CheckIcon className="h-6 w-6 text-white" />
+				</div>
+			);
+		} else {
+			return (
+				<div
+					className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
+					onClick={(event) => addProductsToCArt(event)}
+				>
+					<PlusSmallIcon className="h-6 w-6 text-black" />
+				</div>
+			);
+		}
 	};
 
 	return (
@@ -43,12 +64,7 @@ function Card({ price, title, image, category, description }) {
 					src={image}
 					alt={title}
 				/>
-				<div
-					className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-					onClick={(event) => addProductsToCArt(event)} 
-				>
-					<PlusSmallIcon className="h-6 w-6 text-black" />
-				</div>
+				{ renderIcon(id) }
 			</figure>
 			<p className="flex justify-between">
 				<span className="text-sm font-light truncate mr-2">{title}</span>
