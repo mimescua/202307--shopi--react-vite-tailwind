@@ -3,7 +3,7 @@ import React from 'react';
 const ShoppingCartContext = React.createContext();
 
 const ShoppingCartProvider = ({ children }) => {
-	// shoping Cart - Increase quantity
+	// Shoping Cart - Increase quantity
 	const [count, setCount] = React.useState(0);
 
 	// Product detail - Open/Close
@@ -13,6 +13,9 @@ const ShoppingCartProvider = ({ children }) => {
 
 	// Product detail - Show product
 	const [productToShow, setProductToShow] = React.useState({});
+	
+	// Shoping Cart - Add products to car
+	const [cartProducts, setCartProducts] = React.useState([]);
 
 	return (
 		<ShoppingCartContext.Provider
@@ -24,6 +27,8 @@ const ShoppingCartProvider = ({ children }) => {
 				closeProductDetail,
 				productToShow,
 				setProductToShow,
+				cartProducts,
+				setCartProducts,
 			}}
 		>
 			{children}

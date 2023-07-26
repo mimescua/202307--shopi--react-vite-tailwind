@@ -3,12 +3,23 @@ import { ShoppingCartContext } from '../../context';
 import { PlusSmallIcon } from '@heroicons/react/24/outline';
 
 function Card({ price, title, image, category, description }) {
-	const { count, setCount, openProductDetail, setProductToShow } =
-		React.useContext(ShoppingCartContext);
+	const { 
+		count,
+		setCount,
+		openProductDetail,
+		setProductToShow,
+		cartProducts,
+		setCartProducts
+	} = React.useContext(ShoppingCartContext);
 
 	const showProduct = () => {
 		openProductDetail();
 		setProductToShow({ price, title, image, category, description });
+	};
+
+	const addProductToCArt = () => {
+		setCount(count + 1)
+		setCartProducts([...cartProducts, { price, title, image, category, description }])
 	};
 
 	return (
@@ -27,7 +38,7 @@ function Card({ price, title, image, category, description }) {
 				/>
 				<div
 					className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-					onClick={() => setCount(count + 1)}
+					onClick={addProductToCArt} 
 				>
 					<PlusSmallIcon className="h-6 w-6 text-black" />
 				</div>
