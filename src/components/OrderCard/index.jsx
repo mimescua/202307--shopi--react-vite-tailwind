@@ -2,7 +2,7 @@ import React from 'react';
 import { ShoppingCartContext } from '../../context';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-function OrderCard({ price, title, image }) {
+function OrderCard({ id, price, title, image, handleDelete }) {
 	return (
 		<div className="flex justify-between items-center mb-3">
 			<div className="flex items-center gap-2">
@@ -18,7 +18,7 @@ function OrderCard({ price, title, image }) {
 			<div className='flex items-center gap-2'>
 				<p className=" text-lg font-medium">{price}</p>
 				<XMarkIcon
-					onClick={() => closeCheckoutSideMenu()}
+					onClick={() => handleDelete(id)}
 					className="h-6 w-6 text-black cursor-pointer"
 				/>
 			</div>

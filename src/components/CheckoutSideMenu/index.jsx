@@ -1,14 +1,22 @@
 import React from 'react';
 import { ShoppingCartContext } from '../../context';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import OrderCard from '../OrderCard'
+import OrderCard from '../OrderCard';
+import { totalPrice } from '../../utils'
 
 function CheckoutSideMenu() {
 	const {
-        isCheckoutSideMenuOpen,
-        closeCheckoutSideMenu,
-        cartProducts,
-    } = React.useContext(ShoppingCartContext);
+		isCheckoutSideMenuOpen,
+		closeCheckoutSideMenu,
+		cartProducts,
+		setCartProducts,
+	} = React.useContext(ShoppingCartContext);
+
+	const handleDelete = (id) => {
+		const filteredProducts = cartProducts.filter((product) => product.id != id);
+		setCartProducts(filteredProducts);
+	};
+	const total = totalPrice(cartProducts)
 
 	return (
 		<aside
@@ -25,11 +33,21 @@ function CheckoutSideMenu() {
 					/>
 				</div>
 			</div>
-            <div className='px-6 overflow-y-scroll'>
-                {
-                    cartProducts.map(product => <OrderCard key={product.id} {...product} /> )
-                }
-            </div>
+			<div className="px-6 overflow-y-scroll">
+				{cartProducts.map((product) => (
+					<OrderCard
+						key={product.id}
+						{...product}
+						handleDelete={handleDelete}
+					/>
+				))}
+			</div>
+			<div className='px-6'>
+				<p className='flex justify-between items-center'>
+					<span className='font-light'>{total? 'Total:': ''}</span>
+					<span className='font-medium text-2xl'>{total? `$${total}`: ''}</span>
+				</p>
+			</div>
 		</aside>
 	);
 }
