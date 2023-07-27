@@ -25,6 +25,27 @@ const ShoppingCartProvider = ({ children }) => {
 	// Shoping Cart - Order
 	const [order, setOrder] = React.useState([]);
 
+	// Get products
+	const [products, setProducts] = React.useState(null);
+	const [filteredProducts, setFilteredProducts] = React.useState(null);
+
+	// Get products by title
+	const [searchByTitle, setSearchByTitle] = React.useState('');
+
+	React.useEffect(() => {
+		fetch('https://fakestoreapi.com/products')
+			.then((res) => res.json())
+			.then((json) => setProducts(json));
+	}, []);
+
+	const filteredItemsByTitle = () => {
+		return products?.filter(product => product.title.toLowerCase().includes(searchByTitle.toLowerCase()))
+	}
+
+	React.useEffect(() => {
+		if(searchByTitle) setFilteredProducts(filteredItemsByTitle(products, searchByTitle))
+	}, [products, searchByTitle]);
+
 	return (
 		<ShoppingCartContext.Provider
 			value={{
@@ -42,6 +63,11 @@ const ShoppingCartProvider = ({ children }) => {
 				closeCheckoutSideMenu,
 				order,
 				setOrder,
+				products,
+				setProducts,
+				searchByTitle,
+				setSearchByTitle,
+				filteredProducts
 			}}
 		>
 			{children}
