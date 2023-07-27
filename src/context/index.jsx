@@ -22,6 +22,9 @@ const ShoppingCartProvider = ({ children }) => {
 	const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
 	const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
 
+	// Shoping Cart - Order
+	const [order, setOrder] = React.useState([]);
+
 	return (
 		<ShoppingCartContext.Provider
 			value={{
@@ -37,6 +40,8 @@ const ShoppingCartProvider = ({ children }) => {
 				isCheckoutSideMenuOpen,
 				openCheckoutSideMenu,
 				closeCheckoutSideMenu,
+				order,
+				setOrder,
 			}}
 		>
 			{children}

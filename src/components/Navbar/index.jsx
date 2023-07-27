@@ -88,9 +88,9 @@ function NavBar() {
 						Sign In
 					</NavLink>
 				</li>
-				<li>
+				<li className='flex items-center'>
 					<ShoppingCartIcon className="h-6 w-6 text-black" />
-					<span>{count ? count : ''}</span>
+					<span className=' text-xs'>{count ? count : ''}</span>
 				</li>
 			</ul>
 		</nav>
