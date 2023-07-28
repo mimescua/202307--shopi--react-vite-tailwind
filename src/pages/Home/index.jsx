@@ -3,22 +3,10 @@ import Layout from '../../components/Layout';
 import { ShoppingCartContext } from '../../context';
 import Card from '../../components/Card';
 import ProductDetail from '../../components/ProductDetail';
+import { isEmptyArray } from '.././../utils'
 
 function Home() {
-	const { products, searchByTitle, setSearchByTitle, filteredProducts } = React.useContext(ShoppingCartContext);
-
-	const renderView = () => {
-		if (searchByTitle?.length > 0) {
-			if (filteredProducts?.length > 0) {
-				return filteredProducts?.map((product) => (
-					<Card key={product.id} {...product} />
-				));
-			} else {
-				return (<div>No results for {searchByTitle}</div>)
-			}
-		} else
-			return (products?.map((product) => <Card key={product.id} {...product} />));
-	};
+	const { searchByTitle, setSearchByTitle, productsBySearch } = React.useContext(ShoppingCartContext);
 
 	return (
 		<Layout>
@@ -32,7 +20,11 @@ function Home() {
 				onChange={(event) => setSearchByTitle(event.target.value)}
 			/>
 			<div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
-				{ renderView() }
+				{
+					!isEmptyArray(productsBySearch)? productsBySearch?.map((product) => (
+						<Card key={product.id} {...product} />
+					)) : <div>No results for {searchByTitle}</div>
+				}
 			</div>
 			<ProductDetail />
 		</Layout>

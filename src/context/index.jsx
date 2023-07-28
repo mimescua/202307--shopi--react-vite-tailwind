@@ -3,8 +3,12 @@ import React from 'react';
 const ShoppingCartContext = React.createContext();
 
 const ShoppingCartProvider = ({ children }) => {
-	// Shoping Cart - Increase quantity
-	const [count, setCount] = React.useState(0);
+	// Get products
+	const [products, setProducts] = React.useState([]);
+	const [productsBySearch, setProductsBySearch] = React.useState([]);
+
+	// Site Categories
+	const [categories, setCategories] = React.useState([]);
 
 	// Product detail - Open/Close
 	const [isProductDetailOpen, setIsProductDetailOpen] = React.useState(false);
@@ -13,9 +17,6 @@ const ShoppingCartProvider = ({ children }) => {
 
 	// Product detail - Show product
 	const [productToShow, setProductToShow] = React.useState({});
-	
-	// Shoping Cart - Add products to car
-	const [cartProducts, setCartProducts] = React.useState([]);
 
 	// Checkout side menu - Open/Close
 	const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = React.useState(false);
@@ -25,12 +26,17 @@ const ShoppingCartProvider = ({ children }) => {
 	// Shoping Cart - Order
 	const [order, setOrder] = React.useState([]);
 
-	// Get products
-	const [products, setProducts] = React.useState(null);
-	const [filteredProducts, setFilteredProducts] = React.useState(null);
+	// Shoping Cart - Add products to car
+	const [cartProducts, setCartProducts] = React.useState([]);
 
 	// Get products by title
 	const [searchByTitle, setSearchByTitle] = React.useState('');
+
+	// Get products by category
+	const [searchByCategory, setSearchByCategory] = React.useState('');
+	const productsByCategory = products.filter((product) =>
+		product.category.toLowerCase().includes(searchByCategory.toLowerCase())
+	)
 
 	React.useEffect(() => {
 		fetch('https://fakestoreapi.com/products')
@@ -38,19 +44,34 @@ const ShoppingCartProvider = ({ children }) => {
 			.then((json) => setProducts(json));
 	}, []);
 
-	const filteredItemsByTitle = () => {
-		return products?.filter(product => product.title.toLowerCase().includes(searchByTitle.toLowerCase()))
-	}
+	React.useEffect(() => {
+		const categoriesIni = products.map(product => product.category)
+		const categoriesSet = new Set([...categoriesIni])
+		const categoriesArr = Array.from(categoriesSet)
+		const categoriesObjArr = categoriesArr.map(category => {
+			const url = category.replace(/[^a-zA-Z0-9 ]/g, '').replace(' ', '-')
+			const name = category.charAt(0).toUpperCase() + category.slice(1);
+			return { url, name }
+		})
+
+		setCategories(categoriesObjArr)
+	}, [products]);
 
 	React.useEffect(() => {
-		if(searchByTitle) setFilteredProducts(filteredItemsByTitle(products, searchByTitle))
-	}, [products, searchByTitle]);
+		if(searchByCategory && searchByTitle){
+			const categoryProducts = productsByCategory?.filter(product => product.category.toLowerCase() === searchByCategory.toLowerCase())
+			setProductsBySearch(categoryProducts?.filter(product => product.title.toLowerCase().includes(searchByTitle.toLowerCase())))
+		} else {
+			searchByCategory
+			? setProductsBySearch(productsByCategory?.filter(product => product.category.toLowerCase() === searchByCategory.toLowerCase()))
+			: setProductsBySearch(products?.filter(product => product.title.toLowerCase().includes(searchByTitle.toLowerCase())))
+		}
+		
+	}, [products, searchByTitle, searchByCategory]);
 
 	return (
 		<ShoppingCartContext.Provider
 			value={{
-				count,
-				setCount,
 				isProductDetailOpen,
 				openProductDetail,
 				closeProductDetail,
@@ -65,9 +86,12 @@ const ShoppingCartProvider = ({ children }) => {
 				setOrder,
 				products,
 				setProducts,
+				categories,
 				searchByTitle,
 				setSearchByTitle,
-				filteredProducts
+				setSearchByCategory,
+				productsBySearch,
+				productsByCategory
 			}}
 		>
 			{children}

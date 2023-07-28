@@ -13,7 +13,7 @@ function CheckoutSideMenu() {
 		setCartProducts,
 		order,
 		setOrder,
-		setCount,
+		setSearchByTitle,
 	} = React.useContext(ShoppingCartContext);
 
 	const total = totalPrice(cartProducts)
@@ -32,7 +32,8 @@ function CheckoutSideMenu() {
 		}
 		setOrder([...order, orderToAdd])
 		setCartProducts([])
-		setCount(0)
+		setSearchByTitle('')
+		closeCheckoutSideMenu()
 	}
 
 	return (

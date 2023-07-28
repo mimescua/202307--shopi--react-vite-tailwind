@@ -3,6 +3,7 @@
 ## 1. Create a project using Vite
 
 ```console
+npm create vite@latest
 Project name: <name>
 Select a framework: React
 Select a variant: Javascript

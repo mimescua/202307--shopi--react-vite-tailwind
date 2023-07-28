@@ -1,10 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { ShoppingCartContext } from '../../context';
-import { ShoppingCartIcon } from '@heroicons/react/24/outline'
+import { ShoppingCartIcon } from '@heroicons/react/24/outline';
+import { isEmptyArray } from '../../utils'
 
 function NavBar() {
-	const { count } = React.useContext(ShoppingCartContext);
+	const { categories, cartProducts, setSearchByCategory } = React.useContext(ShoppingCartContext);
 	const activeStyle = 'underline underline-offset-4';
 
 	return (
@@ -16,54 +17,29 @@ function NavBar() {
 				<li>
 					<NavLink
 						to="/"
+						onClick={() => setSearchByCategory('')}
 						className={({ isActive }) => (isActive ? activeStyle : undefined)}
 					>
 						All
 					</NavLink>
 				</li>
-				<li>
-					<NavLink
-						to="/clothes"
-						className={({ isActive }) => (isActive ? activeStyle : undefined)}
-					>
-						Clothes
-					</NavLink>
-				</li>
-				<li>
-					<NavLink
-						to="/electronics"
-						className={({ isActive }) => (isActive ? activeStyle : undefined)}
-					>
-						Electronics
-					</NavLink>
-				</li>
-				<li>
-					<NavLink
-						to="/furniture"
-						className={({ isActive }) => (isActive ? activeStyle : undefined)}
-					>
-						Furniture
-					</NavLink>
-				</li>
-				<li>
-					<NavLink
-						to="/toys"
-						className={({ isActive }) => (isActive ? activeStyle : undefined)}
-					>
-						Toys
-					</NavLink>
-				</li>
-				<li>
-					<NavLink
-						to="/others"
-						className={({ isActive }) => (isActive ? activeStyle : undefined)}
-					>
-						Others
-					</NavLink>
-				</li>
+				{!isEmptyArray(categories) &&
+					categories.map((category, index) => (
+						<li key={index}>
+							<NavLink
+								to={`/${category.url}`}
+								onClick={() => setSearchByCategory(category.name.toLowerCase())}
+								className={({ isActive }) =>
+									isActive ? activeStyle : undefined
+								}
+							>
+								{category.name}
+							</NavLink>
+						</li>
+					))}
 			</ul>
 			<ul className="flex items-center gap-3">
-				<li className="text-balck/60">willsome@mail.com</li>
+				<li className="text-black/60">willsome@mail.com</li>
 				<li>
 					<NavLink
 						to="/my-orders"
@@ -88,9 +64,9 @@ function NavBar() {
 						Sign In
 					</NavLink>
 				</li>
-				<li className='flex items-center'>
+				<li className="flex items-center">
 					<ShoppingCartIcon className="h-6 w-6 text-black" />
-					<span className=' text-xs'>{count ? count : ''}</span>
+					<span className=" text-xs">{cartProducts.length}</span>
 				</li>
 			</ul>
 		</nav>
