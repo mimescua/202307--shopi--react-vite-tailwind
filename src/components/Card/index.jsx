@@ -3,7 +3,7 @@ import { ShoppingCartContext } from '../../context';
 import { PlusSmallIcon, CheckIcon } from '@heroicons/react/24/outline';
 
 function Card({ id, price, title, image, category, description }) {
-	const { 
+	const {
 		openProductDetail,
 		closeProductDetail,
 		setProductToShow,
@@ -18,20 +18,21 @@ function Card({ id, price, title, image, category, description }) {
 	};
 
 	const addProductsToCArt = (event) => {
-		event.stopPropagation()
-		closeProductDetail()
-		setCartProducts([...cartProducts, { id, price, title, image, category, description }])
-		openCheckoutSideMenu()
+		event.stopPropagation();
+		closeProductDetail();
+		setCartProducts([
+			...cartProducts,
+			{ id, price, title, image, category, description },
+		]);
+		openCheckoutSideMenu();
 	};
-	
+
 	const renderIcon = (id) => {
 		const isInCart =
 			cartProducts.filter((product) => product.id === id).length > 0;
 		if (isInCart) {
 			return (
-				<div
-					className="absolute top-0 right-0 flex justify-center items-center bg-green-800 w-6 h-6 rounded-full m-2 p-1"
-				>
+				<div className="absolute top-0 right-0 flex justify-center items-center bg-green-800 w-6 h-6 rounded-full m-2 p-1">
 					<CheckIcon className="h-6 w-6 text-white" />
 				</div>
 			);
@@ -61,7 +62,7 @@ function Card({ id, price, title, image, category, description }) {
 					src={image}
 					alt={title}
 				/>
-				{ renderIcon(id) }
+				{renderIcon(id)}
 			</figure>
 			<p className="flex justify-between">
 				<span className="text-sm font-light truncate mr-2">{title}</span>

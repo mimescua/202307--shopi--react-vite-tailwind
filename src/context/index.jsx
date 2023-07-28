@@ -19,7 +19,8 @@ const ShoppingCartProvider = ({ children }) => {
 	const [productToShow, setProductToShow] = React.useState({});
 
 	// Checkout side menu - Open/Close
-	const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = React.useState(false);
+	const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] =
+		React.useState(false);
 	const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
 	const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
 
@@ -36,7 +37,7 @@ const ShoppingCartProvider = ({ children }) => {
 	const [searchByCategory, setSearchByCategory] = React.useState('');
 	const productsByCategory = products.filter((product) =>
 		product.category.toLowerCase().includes(searchByCategory.toLowerCase())
-	)
+	);
 
 	React.useEffect(() => {
 		fetch('https://fakestoreapi.com/products')
@@ -45,28 +46,44 @@ const ShoppingCartProvider = ({ children }) => {
 	}, []);
 
 	React.useEffect(() => {
-		const categoriesIni = products.map(product => product.category)
-		const categoriesSet = new Set([...categoriesIni])
-		const categoriesArr = Array.from(categoriesSet)
-		const categoriesObjArr = categoriesArr.map(category => {
-			const url = category.replace(/[^a-zA-Z0-9 ]/g, '').replace(' ', '-')
+		const categoriesIni = products.map((product) => product.category);
+		const categoriesSet = new Set([...categoriesIni]);
+		const categoriesArr = Array.from(categoriesSet);
+		const categoriesObjArr = categoriesArr.map((category) => {
+			const url = category.replace(/[^a-zA-Z0-9 ]/g, '').replace(' ', '-');
 			const name = category.charAt(0).toUpperCase() + category.slice(1);
-			return { url, name }
-		})
+			return { url, name };
+		});
 
-		setCategories(categoriesObjArr)
+		setCategories(categoriesObjArr);
 	}, [products]);
 
 	React.useEffect(() => {
-		if(searchByCategory && searchByTitle){
-			const categoryProducts = productsByCategory?.filter(product => product.category.toLowerCase() === searchByCategory.toLowerCase())
-			setProductsBySearch(categoryProducts?.filter(product => product.title.toLowerCase().includes(searchByTitle.toLowerCase())))
+		if (searchByCategory && searchByTitle) {
+			const categoryProducts = productsByCategory?.filter(
+				(product) =>
+					product.category.toLowerCase() === searchByCategory.toLowerCase()
+			);
+			setProductsBySearch(
+				categoryProducts?.filter((product) =>
+					product.title.toLowerCase().includes(searchByTitle.toLowerCase())
+				)
+			);
 		} else {
 			searchByCategory
-			? setProductsBySearch(productsByCategory?.filter(product => product.category.toLowerCase() === searchByCategory.toLowerCase()))
-			: setProductsBySearch(products?.filter(product => product.title.toLowerCase().includes(searchByTitle.toLowerCase())))
+				? setProductsBySearch(
+						productsByCategory?.filter(
+							(product) =>
+								product.category.toLowerCase() ===
+								searchByCategory.toLowerCase()
+						)
+				  )
+				: setProductsBySearch(
+						products?.filter((product) =>
+							product.title.toLowerCase().includes(searchByTitle.toLowerCase())
+						)
+				  );
 		}
-		
 	}, [products, searchByTitle, searchByCategory]);
 
 	return (
@@ -91,7 +108,7 @@ const ShoppingCartProvider = ({ children }) => {
 				setSearchByTitle,
 				setSearchByCategory,
 				productsBySearch,
-				productsByCategory
+				productsByCategory,
 			}}
 		>
 			{children}

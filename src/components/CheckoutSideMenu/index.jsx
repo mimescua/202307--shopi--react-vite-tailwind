@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { ShoppingCartContext } from '../../context';
 import OrderCard from '../OrderCard';
-import { totalPrice } from '../../utils'
+import { totalPrice } from '../../utils';
 
 function CheckoutSideMenu() {
 	const {
@@ -16,25 +16,25 @@ function CheckoutSideMenu() {
 		setSearchByTitle,
 	} = React.useContext(ShoppingCartContext);
 
-	const total = totalPrice(cartProducts)
+	const total = totalPrice(cartProducts);
 
 	const handleDelete = (id) => {
 		const filteredProducts = cartProducts.filter((product) => product.id != id);
 		setCartProducts(filteredProducts);
 	};
 	const handleCheckout = () => {
-		const now = new Date()
+		const now = new Date();
 		const orderToAdd = {
 			date: now.toISOString(),
 			products: cartProducts,
 			totalProducts: cartProducts.length,
 			totalPrice: total,
-		}
-		setOrder([...order, orderToAdd])
-		setCartProducts([])
-		setSearchByTitle('')
-		closeCheckoutSideMenu()
-	}
+		};
+		setOrder([...order, orderToAdd]);
+		setCartProducts([]);
+		setSearchByTitle('');
+		closeCheckoutSideMenu();
+	};
 
 	return (
 		<aside
@@ -60,13 +60,20 @@ function CheckoutSideMenu() {
 					/>
 				))}
 			</div>
-			<div className='px-6 mb-2'>
-				<p className='flex justify-between items-center w-full mb-2'>
-					<span className='font-light'>{total? 'Total:': ''}</span>
-					<span className='font-medium text-2xl'>{total? `$${total}`: ''}</span>
+			<div className="px-6 mb-2">
+				<p className="flex justify-between items-center w-full mb-2">
+					<span className="font-light">{total ? 'Total:' : ''}</span>
+					<span className="font-medium text-2xl">
+						{total ? `$${total}` : ''}
+					</span>
 				</p>
-				<Link to='/my-orders/last'>
-					<button className=' w-full bg-black py-3 text-white rounded-lg' onClick={handleCheckout}>Checkout</button>
+				<Link to="/my-orders/last">
+					<button
+						className=" w-full bg-black py-3 text-white rounded-lg"
+						onClick={handleCheckout}
+					>
+						Checkout
+					</button>
 				</Link>
 			</div>
 		</aside>

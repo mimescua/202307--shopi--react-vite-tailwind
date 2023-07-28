@@ -2,10 +2,11 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { ShoppingCartContext } from '../../context';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
-import { isEmptyArray } from '../../utils'
+import { isEmptyArray } from '../../utils';
 
 function NavBar() {
-	const { categories, cartProducts, setSearchByCategory } = React.useContext(ShoppingCartContext);
+	const { categories, cartProducts, setSearchByCategory } =
+		React.useContext(ShoppingCartContext);
 	const activeStyle = 'underline underline-offset-4';
 
 	return (
