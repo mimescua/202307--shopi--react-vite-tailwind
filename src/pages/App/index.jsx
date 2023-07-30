@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRoutes, BrowserRouter, Navigate } from 'react-router-dom';
+import { useRoutes, HashRouter, Navigate } from 'react-router-dom';
 import { ShoppingCartProvider } from '../../context';
 import './App.css';
 import Home from '../Home';
@@ -87,11 +87,11 @@ const AppRoutes = () => {
 function App() {
 	return (
 		<ShoppingCartProvider>
-			<BrowserRouter>
+			<HashRouter>
 				<AppRoutes />
 				<Nabvar />
 				<CheckoutSideMenu />
-			</BrowserRouter>
+			</HashRouter>
 		</ShoppingCartProvider>
 	);
 }
