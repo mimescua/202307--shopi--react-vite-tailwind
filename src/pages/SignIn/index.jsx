@@ -10,9 +10,12 @@ function SignIn() {
 	const { saveSignOut, account } = React.useContext(ShoppingCartContext);
 
 	const userHasNoAccount = isEmptyObject(account);
+	const handleView = () => {
+		setView('USER-INFO');
+		return <Navigate replace to="/" />;
+	};
 	const handleSignIn = () => {
 		saveSignOut(false);
-		return <Navigate replace to="/" />;
 	};
 
 	return (
@@ -21,7 +24,7 @@ function SignIn() {
 				<h1 className="font-medium text-xl">Sign In</h1>
 			</div>
 			{view === 'CREATE-USER-INFO' ? (
-				<SignInForm handleSignIn={handleSignIn} />
+				<SignInForm handleView={handleView} />
 			) : (
 				<div className="flex flex-col w-80">
 					<p>

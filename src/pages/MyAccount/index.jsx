@@ -5,15 +5,18 @@ import SignInForm from '../SignIn/SignInForm';
 
 function MyAccount() {
 	const [view, setView] = React.useState('USER-INFO');
-	const form = React.useRef(null);
-	const { account, saveAccount } = React.useContext(ShoppingCartContext);
+	const { account } = React.useContext(ShoppingCartContext);
+	const handleView = () => {
+		setView('USER-INFO');
+	};
+
 	return (
 		<Layout>
 			<div className="flex justify-center items-center relative w-80 mb-4">
 				<h1 className="font-medium text-xl">My Account</h1>
 			</div>
 			{view === 'EDIT-USER-INFO' ? (
-				<SignInForm setView={setView} />
+				<SignInForm handleView={handleView} />
 			) : (
 				<div className="flex flex-col w-80">
 					<p>
