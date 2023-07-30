@@ -93,7 +93,7 @@ const ShoppingCartProvider = ({ children }) => {
 	);
 	const { item: signOut, saveItem: saveSignOut } = useLocalStorage(
 		'sign-out',
-		false
+		true
 	);
 
 	return (

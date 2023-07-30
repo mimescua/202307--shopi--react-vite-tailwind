@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShoppingCartContext } from '../../context';
 
-function SignInForm({ setView }) {
+function SignInForm({ handleView }) {
 	const form = React.useRef(null);
 	const { account, saveAccount } = React.useContext(ShoppingCartContext);
 
@@ -20,7 +20,7 @@ function SignInForm({ setView }) {
 		}
 
 		saveAccount({ name, email, password });
-		if (setView) setView('USER-INFO');
+		handleView();
 	};
 
 	const nameDefaultValue = account?.name || '';
