@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import Layout from '../../components/Layout';
 import { ShoppingCartContext } from '../../context';
 import OrdersCard from '../../components/OrdersCard';
@@ -14,7 +13,10 @@ function MyOrders() {
 			</div>
 			{order.map(({ totalProducts, totalPrice }, index) => (
 				<Link key={index} to={`/my-orders/${index}`}>
-					<OrdersCard totalProducts={totalProducts} totalPrice={totalPrice} />
+					<OrdersCard
+						totalProducts={totalProducts}
+						totalPrice={totalPrice.toFixed(2)}
+					/>
 				</Link>
 			))}
 		</Layout>

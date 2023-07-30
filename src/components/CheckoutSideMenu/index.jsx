@@ -64,7 +64,7 @@ function CheckoutSideMenu() {
 				<p className="flex justify-between items-center w-full mb-2">
 					<span className="font-light">{total ? 'Total:' : ''}</span>
 					<span className="font-medium text-2xl">
-						{total ? `$${total}` : ''}
+						{total ? `$${total.toFixed(2)}` : ''}
 					</span>
 				</p>
 				<Link to="/my-orders/last">

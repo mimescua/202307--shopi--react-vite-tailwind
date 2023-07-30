@@ -64,7 +64,7 @@ function Card({ id, price, title, image, category, description }) {
 				/>
 				{renderIcon(id)}
 			</figure>
-			<p className="flex justify-between">
+			<p className="flex justify-between items-center">
 				<span className="text-sm font-light truncate mr-2">{title}</span>
 				<span className="text-lg font-medium">{`$${price}`}</span>
 			</p>
