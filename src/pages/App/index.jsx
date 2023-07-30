@@ -1,4 +1,5 @@
-import { useRoutes, BrowserRouter } from 'react-router-dom';
+import React from 'react';
+import { useRoutes, BrowserRouter, Navigate } from 'react-router-dom';
 import { ShoppingCartProvider } from '../../context';
 import './App.css';
 import Home from '../Home';
@@ -9,12 +10,70 @@ import SignIn from '../SignIn';
 import NotFound from '../NotFound';
 import Nabvar from '../../components/Navbar';
 import CheckoutSideMenu from '../../components/CheckoutSideMenu';
+import { ShoppingCartContext } from '../../context';
+import { isEmptyObject } from '../../utils';
 
 const AppRoutes = () => {
+	const { signOut, account } = React.useContext(ShoppingCartContext);
+
+	const userHasAccount = !isEmptyObject(account);
+	const userIsNotSignOut = !signOut;
+
 	let routes = useRoutes([
-		{ path: '/', element: <Home /> },
-		{ path: '/:category', element: <Home /> },
-		{ path: '/my-account', element: <MyAccount /> },
+		{
+			path: '/',
+			element:
+				userHasAccount && userIsNotSignOut ? (
+					<Home />
+				) : (
+					<Navigate replace to="/sign-in" />
+				),
+		},
+		{
+			path: '/mens-clothing',
+			element:
+				userHasAccount && userIsNotSignOut ? (
+					<Home />
+				) : (
+					<Navigate replace to="/sign-in" />
+				),
+		},
+		{
+			path: '/womens-clothing',
+			element:
+				userHasAccount && userIsNotSignOut ? (
+					<Home />
+				) : (
+					<Navigate replace to="/sign-in" />
+				),
+		},
+		{
+			path: '/electronics',
+			element:
+				userHasAccount && userIsNotSignOut ? (
+					<Home />
+				) : (
+					<Navigate replace to="/sign-in" />
+				),
+		},
+		{
+			path: '/jewelery',
+			element:
+				userHasAccount && userIsNotSignOut ? (
+					<Home />
+				) : (
+					<Navigate replace to="/sign-in" />
+				),
+		},
+		{
+			path: '/my-account',
+			element:
+				userHasAccount && signOut ? (
+					<Navigate replace to="/sign-in" />
+				) : (
+					<MyAccount />
+				),
+		},
 		{ path: '/my-order', element: <MyOrder /> },
 		{ path: '/my-orders', element: <MyOrders /> },
 		{ path: '/my-orders/last', element: <MyOrder /> },
